@@ -1,7 +1,10 @@
-let sum = 0;
-for (let i = 1; i <= 100; i++) {
-    if (i % 3 !== 0) {
-        sum += i;
+function pad(str, char, count, isStart) {
+    let padding = '';
+    for (let i = str.length; i < count; i++) {
+        padding += char;
     }
+    return isStart ? padding + str : str + padding;
 }
-console.log(sum);//
+
+console.log(pad('qwerty', '+', 10, true));  // поверне "++++qwerty"
+console.log(pad('qwerty', '+', 10, false));  // поверне "qwerty++++"

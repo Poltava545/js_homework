@@ -1,14 +1,7 @@
-function drawTriangle(height, symbol) {
-    for (let i = 1; i <= height; i++) {
-        console.log(symbol.repeat(i));
-    }
+function myIsNaN(value) {
+  return value !== value;
 }
-drawTriangle(5, '*');
 
-
-/*
-let height = 5;
-let symbol = '*';
-for (let i = 1; i <= height; i++) 
-  {console.log(symbol.repeat(i));}
-*///
+console.log(myIsNaN(NaN));  // повинно вивести true
+console.log(myIsNaN(123));  // повинно вивести false
+console.log(myIsNaN('abc'));  // повинно вивести false
