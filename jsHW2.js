@@ -1,10 +1,37 @@
-function pad(str, char, count, isStart) {
-    let padding = '';
-    for (let i = str.length; i < count; i++) {
-        padding += char;
-    }
-    return isStart ? padding + str : str + padding;
-}
+var services = {
+    "стрижка": "60 грн",
+    "гоління": "80 грн",
+    "Миття голови": "100 грн",
+};
 
-console.log(pad('qwerty', '+', 10, true));  // поверне "++++qwerty"
-console.log(pad('qwerty', '+', 10, false));  // поверне "qwerty++++"
+
+services['Розбити скло'] = "200 грн";
+
+
+services.price = function () {
+    const numericValues = Object.values(this)
+        .filter(value => !isNaN(parseInt(value)));
+
+    return numericValues.length > 0 ? numericValues.reduce((total, value) => total + parseInt(value), 0) + ' грн' : 'Немає числових значень';
+};
+
+services.minPrice = function () {
+    const numericValues = Object.values(this)
+        .filter(value => !isNaN(parseInt(value)))
+        .map(value => parseInt(value));
+
+    return numericValues.length > 0 ? Math.min(...numericValues) + ' грн' : 'Немає числових значень';
+};
+
+services.maxPrice = function () {
+    const numericValues = Object.values(this)
+        .filter(value => !isNaN(parseInt(value)))
+        .map(value => parseInt(value));
+
+    return numericValues.length > 0 ? Math.max(...numericValues) + ' грн' : 'Немає числових значень';
+};
+
+
+console.log("Загальна вартість послуг: " + services.price());
+console.log("Мінімальна ціна: " + services.minPrice());
+console.log("Максимальна ціна: " + services.maxPrice());

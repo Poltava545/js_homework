@@ -1,7 +1,20 @@
-function myIsNaN(value) {
-  return value !== value;
-}
 
-console.log(myIsNaN(NaN));  // повинно вивести true
-console.log(myIsNaN(123));  // повинно вивести false
-console.log(myIsNaN('abc'));  // повинно вивести false
+let myObject = {
+    property1: 'Значення1',
+    property2: 'Значення2',
+    property3: 'Значення3',
+  
+    getInfo: function() {
+        for (let key in this) {
+            if (typeof this[key] !== 'function') {
+                console.log(`${key}: ${this[key]}`);
+            }
+        }
+    }
+};
+
+//myObject.getInfo();
+
+myObject.newProperty = 'Нова властивість!';
+
+myObject.getInfo();
