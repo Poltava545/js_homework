@@ -1,20 +1,14 @@
+function myBlend(arr) {
+    var n = arr.length;
 
-let myObject = {
-    property1: 'Значення1',
-    property2: 'Значення2',
-    property3: 'Значення3',
-  
-    getInfo: function() {
-        for (let key in this) {
-            if (typeof this[key] !== 'function') {
-                console.log(`${key}: ${this[key]}`);
-            }
-        }
+    for (var i = 0; i < n; i++) {
+        var j = Math.floor(Math.random() * n);
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
-};
+}
 
-//myObject.getInfo();
-
-myObject.newProperty = 'Нова властивість!';
-
-myObject.getInfo();
+var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+myBlend(arr);
+console.log(arr);

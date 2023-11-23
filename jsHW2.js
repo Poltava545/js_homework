@@ -1,37 +1,72 @@
-var services = {
-    "стрижка": "60 грн",
-    "гоління": "80 грн",
-    "Миття голови": "100 грн",
+const company = {
+    name: 'Велика Компанія',
+    type:'Головна компанія',
+    platform: 'Платформа для продажу квитків',
+    sellsSolution: 'Рішення для продажу квитків',
+    clients: [
+        {
+            name: 'Клієнт 1',
+            type: 'subCompany',
+            uses: 'ПО для продажу квитків',
+            sells: 'Рішення для продажу квитків',
+            partners: [
+                {
+                    name: 'Клієнт 1.1',
+                    type: 'subSubCompany',
+                    uses: 'Рішення для продажу квитків',
+                    sells: 'Рішення для продажу квитків',
+                },
+                {
+                    name: 'Клієнт 1.2',
+                    type: 'subSubCompany',
+                    uses: 'Рішення для продажу квитків',
+                    sells: 'Рішення для продажу квитків',
+                    partners: [
+                        {
+                            name: 'Клієнт 1.2.3',
+                            type: 'subSubCompany',
+                            uses: 'Рішення для продажу квитків',
+                            sells: 'Рішення для продажу квитків',
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            name: 'Клієнт 2',
+            type: 'subCompany',
+            uses: 'ПО для продажу квитків',
+            sells: 'Рішення для продажу квитків'
+        }
+    ]
 };
 
 
-services['Розбити скло'] = "200 грн";
 
 
-services.price = function () {
-    const numericValues = Object.values(this)
-        .filter(value => !isNaN(parseInt(value)));
 
-    return numericValues.length > 0 ? numericValues.reduce((total, value) => total + parseInt(value), 0) + ' грн' : 'Немає числових значень';
-};
+function findValueByKey(companyName, company) {
+    // Перевіряємо чи назва поточної компанії збігається з шуканою
+    if (company.name === companyName) return company;
 
-services.minPrice = function () {
-    const numericValues = Object.values(this)
-        .filter(value => !isNaN(parseInt(value)))
-        .map(value => parseInt(value));
+    // Об'єднуємо підкомпанії з partners та clients
+    const subCompanies = [...(company.partners || []), ...(company.clients || [])];
 
-    return numericValues.length > 0 ? Math.min(...numericValues) + ' грн' : 'Немає числових значень';
-};
+    // Шукаємо в кожній підкомпанії
+    for (const subCompany of subCompanies) {
+        const result = findValueByKey(companyName, subCompany);
+        if (result) return result;
+    }
 
-services.maxPrice = function () {
-    const numericValues = Object.values(this)
-        .filter(value => !isNaN(parseInt(value)))
-        .map(value => parseInt(value));
+    // Нічого не знайдено
+    return null;
+}
 
-    return numericValues.length > 0 ? Math.max(...numericValues) + ' грн' : 'Немає числових значень';
-};
+const companyNameToFind = 'Клієнт 1.2.3';
+const result = findValueByKey(companyNameToFind, company);
 
-
-console.log("Загальна вартість послуг: " + services.price());
-console.log("Мінімальна ціна: " + services.minPrice());
-console.log("Максимальна ціна: " + services.maxPrice());
+if (result) {
+    console.log('Знайдено компанію:', result);
+} else {
+    console.log('Компанію з назвою', companyNameToFind, 'не знайдено.');
+}
